@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="red_dot" type="id" />
+    <item name="title_bar" type="id" />
+    <item name="content_view" type="id" />
+    <item name="global_layout" type="id" />
+    <item name="navigation_bar" type="id" />
+    <item name="top_layout" type="id" />
+    <item name="below_layout" type="id" />
+    <item name="user_name" type="id" />
+    <item name="user_passwd" type="id" />
+    <item name="user_login" type="id" />
+</resources>

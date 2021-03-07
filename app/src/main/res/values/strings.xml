@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Learn</string>
+    <string name="user_name">用户名</string>
+    <string name="user_passwd">密码</string>
+    <string name="login_submit">登录</string>
+</resources>
