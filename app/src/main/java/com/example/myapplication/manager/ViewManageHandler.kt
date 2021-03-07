@@ -5,7 +5,6 @@ import android.os.Looper
 import android.os.Message
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.RelativeLayout
 import com.example.myapplication.MainActivity
 import com.example.myapplication.R
 import com.example.myapplication.param.RouteParam
@@ -31,6 +30,9 @@ object ViewManageHandler : Handler(Looper.getMainLooper()){
         }
     }
 
+    /**
+     * 发送 view 压栈的消息
+     */
     fun sendPushViewMsg(layoutId: Int, routeParam: RouteParam){
         val msg: Message = obtainMessage()
         when(routeParam.pageType) {
@@ -52,7 +54,7 @@ object ViewManageHandler : Handler(Looper.getMainLooper()){
         val layoutId: Int = routeParam.layoutId
 
         //找到全局view
-        val globalContentView: GlobalView = MainActivity.App.globalActivity.findViewById<View>(R.id.global_layout) as GlobalView
+        val globalView: GlobalView = MainActivity.App.globalActivity.findViewById<View>(R.id.global_layout) as GlobalView
         when(pageType) {
             //居中布局的普通页面
             RouteParam.COMMON_PAGE -> {
@@ -63,17 +65,17 @@ object ViewManageHandler : Handler(Looper.getMainLooper()){
                 //装载NavigatorBar
                 loadNavigatorBarView(routeParam)
 
-                if (globalContentView is ViewProxy) {
-                    ViewStack.push(globalContentView)
+                if (globalView is ViewProxy) {
+                    ViewStack.push(globalView)
                 }
             }
             //全局页面
             RouteParam.GLOBAL_PAGE -> {
-                val contentLayout: View = LayoutInflater.from(globalContentView.context).inflate(layoutId, globalContentView, false)
+                val contentLayout: View = LayoutInflater.from(globalView.context).inflate(layoutId, globalView, false)
                 if (contentLayout is ViewProxy) {
                     ViewStack.push(contentLayout)
                 }
-                globalContentView.addView(contentLayout)
+                globalView.addView(contentLayout)
             }
         }
     }
@@ -84,6 +86,7 @@ object ViewManageHandler : Handler(Looper.getMainLooper()){
     private fun loadNavigatorBarView(routeParam: RouteParam):NavigatorView {
         val navigatorView: NavigatorView = MainActivity.App.globalActivity.findViewById<View>(R.id.navigation_bar) as NavigatorView
         //todo
+        navigatorView.removeAllViews()
         return navigatorView
     }
 
@@ -94,9 +97,7 @@ object ViewManageHandler : Handler(Looper.getMainLooper()){
         val layoutId: Int = routeParam.layoutId
         val contentView: ContentView = MainActivity.App.globalActivity.findViewById<View>(R.id.content_view) as ContentView
         val needLoadContent: View = LayoutInflater.from(contentView.context).inflate(layoutId, contentView, false)
-        if (needLoadContent is ViewProxy) {
-            //ViewStack.push(needLoadContent)
-        }
+        contentView.removeAllViews()
         contentView.addView(needLoadContent)
         return contentView
     }
@@ -107,6 +108,7 @@ object ViewManageHandler : Handler(Looper.getMainLooper()){
     private fun loadTitleBarView(routeParam: RouteParam):TitleBarView {
         //todo
         val titleBarView: TitleBarView = MainActivity.App.globalActivity.findViewById<View>(R.id.title_bar) as TitleBarView
+        titleBarView.removeAllViews()
         return titleBarView
     }
 }

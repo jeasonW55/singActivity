@@ -47,9 +47,9 @@ class LoginPageView: RelativeLayout, ViewProxy, View.OnClickListener {
     override fun onClick(v: View?) {
         when(v?.id) {
             R.id.user_login -> {
-                if (findViewById<EditText>(R.id.user_name).getText().toString().isEmpty()) {
-                    return
-                }
+//                if (findViewById<EditText>(R.id.user_name).getText().toString().isEmpty()) {
+//                    return
+//                }
                 val routParam = RouteParam.createCommonPageParam(R.layout.page_first_page)
                 ViewManageHandler.sendPushViewMsg(R.layout.page_first_page, routParam)
             }
